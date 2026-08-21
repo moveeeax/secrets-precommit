@@ -1,0 +1,9 @@
+# This repo eats its own dog food: the secret scanner runs on itself.
+repos:
+  - repo: local
+    hooks:
+      - id: secrets-precommit
+        name: secrets-precommit
+        entry: secrets-precommit scan
+        language: python
+        types: [text]

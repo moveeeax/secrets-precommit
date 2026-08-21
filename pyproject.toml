@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "secrets-precommit"
+version = "0.1.0"
+description = "Block committed secrets before they hit history — a pre-commit bundle with allowlist and baseline."
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Michael Tarassov", email = "michael@tarassov.me" }]
+requires-python = ">=3.9"
+keywords = ["security", "secrets", "pre-commit", "gitleaks", "devsecops"]
+dependencies = ["PyYAML>=5.1"]
+
+[project.urls]
+Homepage = "https://github.com/moveeeax/secrets-precommit"
+
+[project.optional-dependencies]
+dev = ["pytest>=7"]
+
+[project.scripts]
+secrets-precommit = "secrets_precommit.cli:main"
+
+[tool.setuptools]
+packages = ["secrets_precommit"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Never ignore fixtures/tests — they carry planted (fake) secrets on purpose.
+!examples/**
+!tests/**
+
+# ...but build artefacts stay ignored even under the negated paths above.
+**/__pycache__/
+*.py[cod]

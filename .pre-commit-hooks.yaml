@@ -1,0 +1,19 @@
+# Hook definitions consumed by downstream repos via
+#   - repo: https://github.com/moveeeax/secrets-precommit
+#     rev: v0.1.0
+#     hooks: [{ id: secrets-precommit }]
+- id: secrets-precommit
+  name: secrets-precommit
+  description: Scan staged files for committed secrets (allowlist + baseline aware).
+  entry: secrets-precommit scan
+  language: python
+  types: [text]
+  require_serial: false
+
+- id: secrets-precommit-baseline
+  name: secrets-precommit (regenerate baseline)
+  description: Regenerate the accept-known baseline for an existing repo.
+  entry: secrets-precommit baseline
+  language: python
+  pass_filenames: false
+  stages: [manual]

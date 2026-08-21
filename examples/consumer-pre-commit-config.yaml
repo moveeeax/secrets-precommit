@@ -1,0 +1,25 @@
+# Drop this into a downstream repo's .pre-commit-config.yaml to adopt the
+# bundle. It wires the fast local scanner from this repo plus the upstream
+# gitleaks and trufflehog hooks, all sharing one allowlist/baseline convention.
+repos:
+  # This bundle: quick, dependency-light scan that runs first.
+  - repo: https://github.com/moveeeax/secrets-precommit
+    rev: v0.1.0
+    hooks:
+      - id: secrets-precommit
+
+  # gitleaks — broad ruleset, git-aware.
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.18.4
+    hooks:
+      - id: gitleaks
+
+  # trufflehog — verified-secret detection.
+  - repo: https://github.com/trufflesecurity/trufflehog
+    rev: v3.82.6
+    hooks:
+      - id: trufflehog
+        name: trufflehog
+        entry: trufflehog git file://. --since-commit HEAD --only-verified --fail
+        language: system
+        pass_filenames: false

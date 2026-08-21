@@ -1,0 +1,48 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: secrets-precommit
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Python
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends python3 python3-pip python3-venv git
+
+      - name: Create venv and install
+        run: |
+          python3 -m venv .venv
+          . .venv/bin/activate
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+
+      - name: Run unit tests
+        run: |
+          . .venv/bin/activate
+          python -m pytest -q
+
+      - name: Self-scan (the hook eats its own dog food)
+        run: |
+          . .venv/bin/activate
+          secrets-precommit scan .
+
+      - name: Fixture must fail without the allowlist
+        run: |
+          . .venv/bin/activate
+          set +e
+          secrets-precommit scan --allowlist /dev/null examples/planted_secrets.txt
+          rc=$?
+          set -e
+          if [ "$rc" -ne 1 ]; then
+            echo "expected exit 1 on planted secrets, got $rc"
+            exit 1
+          fi
+          echo "planted secrets correctly detected"
