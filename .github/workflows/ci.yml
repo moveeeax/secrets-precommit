@@ -13,9 +13,10 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Install Python
+        # The self-hosted ARC runner is minimal; install Python via apt (sudo).
         run: |
-          apt-get update
-          apt-get install -y --no-install-recommends python3 python3-pip python3-venv git
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends python3 python3-pip python3-venv git
 
       - name: Create venv and install
         run: |
