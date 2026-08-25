@@ -8,12 +8,11 @@ on:
 
 jobs:
   test:
-    runs-on: secrets-precommit
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
       - name: Install Python
-        # The self-hosted ARC runner is minimal; install Python via apt (sudo).
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends python3 python3-pip python3-venv git
