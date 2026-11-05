@@ -116,3 +116,7 @@ CI runs the tests, self-scans the repo, and asserts the planted fixtures in
 ## License
 
 MIT — see [LICENSE](LICENSE).
+
+---
+
+**Archived on 2026-11-05.** gitleaks, trufflehog and detect-secrets are mature, ship far larger rulesets, and between them already have allowlists and baselines; this repo's own example config wires gitleaks and trufflehog, so the custom scanner adds little.
